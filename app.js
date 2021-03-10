@@ -2,6 +2,7 @@ var upColor = '#ec0000';
 var upBorderColor = '#8A0000';
 var downColor = '#00da3c';
 var downBorderColor = '#008F28';
+
 let app = new Vue({
   el: '#main',
   data() {
@@ -28,7 +29,7 @@ let app = new Vue({
             show: true,
             type: 'slider',
             top: '90%',
-            start: 50,
+            start: 0,
             end: 100
           }
         ],
@@ -46,18 +47,16 @@ let app = new Vue({
           }
         ]
       },
-      // data:[],
-      // date:[]
     }
   },
   methods: {
     wsStart() {
       ws = new WebSocket('ws://107.152.42.244:9502');
       ws.onopen = () => {
-        console.log('状态打开...');
+        console.log('open...');
       }
       ws.onmessage = (res) => {
-        console.log("数据：", JSON.parse(res.data));
+        // console.log("data：", JSON.parse(res.data));
         let arr = [
           JSON.parse(res.data).open,
           JSON.parse(res.data).close,
@@ -68,14 +67,11 @@ let app = new Vue({
         this.option.xAxis.data.push(JSON.parse(res.data).date);
         // console.log(this.option.series[0].data);
         // console.log(this.option.xAxis.data);
-        // setTimeout(() => {
         let myChart = echarts.init(this.$el);
         myChart.setOption(this.option);
-        // }, 0);
-
       };
       ws.onclose = () => {
-        console.log('状态关闭...');
+        console.log('close...');
       }
     },
     wsClose() {
@@ -87,9 +83,4 @@ let app = new Vue({
     this.wsStart();
     // this.wsClose();
   },
-  watch: {
-    option() {
-      // console.log('option change');
-    }
-  }
 })
