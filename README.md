@@ -16,3 +16,7 @@
     </tr>
   </tbody>
 </table>
+
+### 簡述 :
+檔案為 index.html 和 app.js 兩支檔案。
+本來想部屬在firebase上，但https上無法顯示，暫時無法解決。
